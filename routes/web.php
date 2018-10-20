@@ -27,3 +27,12 @@ $router -> group(['prefix' => 'categories'], function() use ($router) {
     $router -> put('/{id}', 'CategoryController@update');
     $router -> delete('/{id}', 'CategoryController@destroy');
 });
+
+$router -> group(['prefix' => 'users'], function() use ($router) {
+    $router -> get('/', 'UserController@index');    
+    $router -> get('/{id}', 'UserController@show');
+    $router -> put('/{id}', 'UserController@updateProfile');
+    $router -> put('/{id}/password', 'UserController@updatePassword');
+    $router -> put('/{id}/position', 'UserController@updatePosition');
+    $router -> delete('/{id}', 'UserController@destroy');
+});
