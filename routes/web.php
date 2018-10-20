@@ -14,3 +14,6 @@
 $router->get('/', function () {
     return 'Test';
 });
+
+$router -> post('/login', 'AuthController@login');
+$router -> post('/register', 'AuthController@register');
