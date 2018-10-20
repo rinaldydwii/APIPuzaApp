@@ -12,8 +12,18 @@
 */
 
 $router->get('/', function () {
-    return 'Test';
+    $res['success'] = true;
+    $res['result'] = "Welcome to API Puza App";
+    return response($res);
 });
 
 $router -> post('/login', 'AuthController@login');
 $router -> post('/register', 'AuthController@register');
+// $router -> get('/user/{id}', ['middleware' => 'auth', 'uses' => 'UserController@get_user']); 
+$router -> group(['prefix' => 'categories'], function() use ($router) {
+    $router -> get('/', 'CategoryController@index');    
+    $router -> get('/{id}', 'CategoryController@show');
+    $router -> post('/', 'CategoryController@store');
+    $router -> put('/{id}', 'CategoryController@update');
+    $router -> delete('/{id}', 'CategoryController@destroy');
+});
