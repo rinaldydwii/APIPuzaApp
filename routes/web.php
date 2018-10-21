@@ -20,6 +20,11 @@ $router->get('/', function () {
 $router -> post('/login', 'AuthController@login');
 $router -> post('/register', 'AuthController@register');
 // $router -> get('/user/{id}', ['middleware' => 'auth', 'uses' => 'UserController@get_user']); 
+
+$router -> group(['prefix' => 'positions'], function() use ($router) {
+    $router -> get('/', 'PositionController@index');    
+});
+
 $router -> group(['prefix' => 'categories'], function() use ($router) {
     $router -> get('/', 'CategoryController@index');    
     $router -> get('/{id}', 'CategoryController@show');
@@ -35,4 +40,13 @@ $router -> group(['prefix' => 'users'], function() use ($router) {
     $router -> put('/{id}/password', 'UserController@updatePassword');
     $router -> put('/{id}/position', 'UserController@updatePosition');
     $router -> delete('/{id}', 'UserController@destroy');
+});
+
+$router -> group(['prefix' => 'logs'], function() use ($router) {
+    $router -> get('/', 'LogController@index');    
+    $router -> get('/{id}', 'LogController@show');
+    $router -> put('/{id}', 'LogController@updateProfile');
+    $router -> put('/{id}/password', 'LogController@updatePassword');
+    $router -> put('/{id}/position', 'LogController@updatePosition');
+    $router -> delete('/{id}', 'LogController@destroy');
 });

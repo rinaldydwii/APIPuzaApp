@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-
+use App\Log;
 
 class AuthController extends Controller
 {
@@ -51,6 +51,11 @@ class AuthController extends Controller
         ]);
         
         if ($user) {
+            $log = Log::create([
+                'log_sub_type_id'   => 1,
+                'user_id'           => Auth::user() -> id,
+                'information'       => 'Create new user: ' . $user -> username
+            ]);
             return response()->json([
                 'success'   => true,
                 'messages'  => 'Register Success!',
@@ -62,7 +67,6 @@ class AuthController extends Controller
                 'messages'  => 'Register Fail!',
             ], 400);
         }
-        
     }
 
     /**
@@ -88,7 +92,11 @@ class AuthController extends Controller
             $user -> update([
                 'api_token' => $apiToken
             ]);
-
+            $log = Log::create([
+                'log_sub_type_id'   => 4,
+                'user_id'           => $user -> id,
+                'information'       => 'Login user'
+            ]);
             return response()->json([
                 'success'   => true,
                 'messages'  => 'Login Success!',
