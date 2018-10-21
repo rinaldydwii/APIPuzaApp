@@ -26,7 +26,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Users',
-            'data'      => User::all()
+            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id')->select('users.*', 'positions.name as position_name')->get()
         ], 200);
     }
 
