@@ -86,6 +86,13 @@ class AuthController extends Controller
 
         $user = User::where('username', $username) -> first();
 
+        if (!$user) {
+            return response()->json([
+                'success'   => false,
+                'messages'  => 'Account not found!',
+            ], 400);
+        }
+
         if (Hash::check($password, $user -> password)) {
             $apiToken = base64_encode(str_random(40));
             
