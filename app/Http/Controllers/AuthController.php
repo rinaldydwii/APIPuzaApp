@@ -38,7 +38,7 @@ class AuthController extends Controller
         if (Auth::user() -> position_id == '4') {
             return response()->json([
                 'success'   => false,
-                'messages'  => 'Register Fail! You don\'t has access to this function.',
+                'messages'  => 'You don\'t has access to this function.',
             ], 401);
         }
 
@@ -108,8 +108,8 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'success'   => false,
-                'messages'  => 'Login Fail!',
-            ], 401);
+                'messages'  => 'Login Fail! Username and Password don\'t Match!',
+            ], 400);
         }
     }
 }
