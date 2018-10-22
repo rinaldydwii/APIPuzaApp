@@ -19,7 +19,7 @@ class Position extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'value'
+        'name'
     ];
 
 }
