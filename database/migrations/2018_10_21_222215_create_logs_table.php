@@ -18,7 +18,7 @@ class CreateLogsTable extends Migration
             $table->unsignedInteger('log_sub_type_id');
             $table->foreign('log_sub_type_id')->references('id')->on('log_sub_types')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('no action')->onUpdate('cascade');
             $table->string('information')->nullable();
             $table->timestamps();
         });
