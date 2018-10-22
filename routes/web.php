@@ -43,10 +43,10 @@ $router -> group(['prefix' => 'users'], function() use ($router) {
 });
 
 $router -> group(['prefix' => 'logs'], function() use ($router) {
-    $router -> get('/', 'LogController@index');    
-    $router -> get('/{id}', 'LogController@show');
-    $router -> put('/{id}', 'LogController@updateProfile');
-    $router -> put('/{id}/password', 'LogController@updatePassword');
-    $router -> put('/{id}/position', 'LogController@updatePosition');
-    $router -> delete('/{id}', 'LogController@destroy');
+    $router -> get('/', 'LogController@index');
+    // $router -> get('/{id}', 'LogController@show');
+    // $router -> put('/{id}', 'LogController@updateProfile');
+    // $router -> put('/{id}/password', 'LogController@updatePassword');
+    // $router -> put('/{id}/position', 'LogController@updatePosition');
+    // $router -> delete('/{id}', 'LogController@destroy');
 });
