@@ -28,7 +28,7 @@ class LogController extends Controller
                 ->join('log_types', 'log_sub_types.log_type_id', '=', 'log_types.id')
                 ->join('users', 'logs.user_id', '=', 'users.id')
                 ->select('logs.id', 'log_sub_types.name as log_sub_type_name', 'log_types.name as log_type_name', 'logs.information',  'users.name as user_name', 'logs.created_at', 'logs.updated_at')
-                ->get()
+                ->orderBy('created_at','desc')->get()
             );
     }
     /**
