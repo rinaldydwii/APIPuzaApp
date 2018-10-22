@@ -84,7 +84,7 @@ class AuthController extends Controller
         $username   = $request -> input('username');
         $password   = $request -> input('password');
 
-        $user = User::where('username', $username) -> first();
+        $user = User::where('username', $username) -> join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> first();
 
         if (!$user) {
             return response()->json([
@@ -115,7 +115,7 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'success'   => false,
-                'messages'  => 'Username and Password don\'t Match!',
+                'messages'  => 'Username and Password doesn\'t Match!',
             ], 400);
         }
     }
