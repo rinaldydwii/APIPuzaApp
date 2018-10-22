@@ -115,7 +115,7 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'success'   => false,
-                'messages'  => 'Login Fail! Username and Password don\'t Match!',
+                'messages'  => 'Username and Password don\'t Match!',
             ], 400);
         }
     }
