@@ -36,9 +36,9 @@ $router -> group(['prefix' => 'categories'], function() use ($router) {
 $router -> group(['prefix' => 'users'], function() use ($router) {
     $router -> get('/', 'UserController@index');    
     $router -> get('/{id}', 'UserController@show');
-    $router -> put('/{id}', 'UserController@updateProfile');
-    $router -> put('/{id}/password', 'UserController@updatePassword');
-    $router -> put('/{id}/position', 'UserController@updatePosition');
+    $router -> put('/profile', 'UserController@updateProfile');
+    $router -> put('/password', 'UserController@updatePassword');
+    $router -> put('/position/{id}', 'UserController@updatePosition');
     $router -> delete('/{id}', 'UserController@destroy');
 });
 
