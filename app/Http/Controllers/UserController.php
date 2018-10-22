@@ -106,7 +106,7 @@ class UserController extends Controller
         
         $user -> update($request->all());
         $log = Log::create([
-            'log_sub_type_id'   => 7,
+            'log_sub_type_id'   => env('LOG_USER_CHANGE_PROFILE'),
             'user_id'           => Auth::user() -> id,
             'information'       => $logInfo
         ]);
@@ -149,7 +149,7 @@ class UserController extends Controller
             'password' => Hash::make($request -> password)
         ]);
         $log = Log::create([
-            'log_sub_type_id'   => 8,
+            'log_sub_type_id'   => env('LOG_USER_CHANGE_PASSWORD'),
             'user_id'           => Auth::user() -> id,
             'information'       => 'Change password'
         ]);
@@ -173,7 +173,7 @@ class UserController extends Controller
             'position_id'   => 'required|exists:positions,id',
         ]);
 
-        if (Auth::user() -> position_id == '4') {
+        if (Auth::user() -> position_id == env('USER_EMPLOYEE_POS')) {
             return response()->json([
                 'success'   => false,
                 'messages'  => 'You don\'t has access to this function.',
@@ -192,7 +192,7 @@ class UserController extends Controller
 
         $user -> update($request->all());
         $log = Log::create([
-            'log_sub_type_id'   => 9,
+            'log_sub_type_id'   => env('LOG_USER_CHANGE_POSITION'),
             'user_id'           => Auth::user() -> id,
             'information'       => 'Change position from '.Position::find($userOld -> position_id)->name.' into '.Position::find($request -> position_id)->name
         ]);
@@ -211,7 +211,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::user() -> position_id == '4') {
+        if (Auth::user() -> position_id == env('USER_EMPLOYEE_POS')) {
             return response()->json([
                 'success'   => false,
                 'messages'  => 'You don\'t has access to this function.',
@@ -221,7 +221,7 @@ class UserController extends Controller
 
         if ($user -> delete()) {
             $log = Log::create([
-                'log_sub_type_id'   => 2,
+                'log_sub_type_id'   => env('LOG_USER_DELETE'),
                 'user_id'           => Auth::user() -> id,
                 'information'       => 'Delete user: '.$user -> username
             ]);

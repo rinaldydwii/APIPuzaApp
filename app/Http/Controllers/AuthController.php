@@ -35,7 +35,7 @@ class AuthController extends Controller
             'password'      => 'required|string|min:6|confirmed',
         ]);
 
-        if (Auth::user() -> position_id == '4') {
+        if (Auth::user() -> position_id == env('USER_EMPLOYEE_POS')) {
             return response()->json([
                 'success'   => false,
                 'messages'  => 'You don\'t has access to this function.',
@@ -52,7 +52,7 @@ class AuthController extends Controller
         
         if ($user) {
             $log = Log::create([
-                'log_sub_type_id'   => 1,
+                'log_sub_type_id'   => env('LOG_USER_CREATE'),
                 'user_id'           => Auth::user() -> id,
                 'information'       => 'Create new user: ' . $user -> username
             ]);
@@ -93,7 +93,7 @@ class AuthController extends Controller
                 'api_token' => $apiToken
             ]);
             $log = Log::create([
-                'log_sub_type_id'   => 4,
+                'log_sub_type_id'   => env('LOG_USER_LOGIN'),
                 'user_id'           => $user -> id,
                 'information'       => 'Login user'
             ]);
