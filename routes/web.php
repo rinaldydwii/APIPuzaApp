@@ -25,17 +25,10 @@ $router -> group(['prefix' => 'positions'], function() use ($router) {
     $router -> get('/', 'PositionController@index');    
 });
 
-$router -> group(['prefix' => 'categories'], function() use ($router) {
-    $router -> get('/', 'CategoryController@index');    
-    $router -> get('/{id}', 'CategoryController@show');
-    $router -> post('/', 'CategoryController@store');
-    $router -> put('/{id}', 'CategoryController@update');
-    $router -> delete('/{id}', 'CategoryController@destroy');
-});
-
 $router -> group(['prefix' => 'users'], function() use ($router) {
     $router -> get('/', 'UserController@index');    
     $router -> get('/{id}', 'UserController@show');
+    $router -> get('/self', 'UserController@showSelf');
     $router -> put('/profile', 'UserController@updateProfile');
     $router -> put('/password', 'UserController@updatePassword');
     $router -> put('/position/{id}', 'UserController@updatePosition');
@@ -49,4 +42,12 @@ $router -> group(['prefix' => 'logs'], function() use ($router) {
     // $router -> put('/{id}/password', 'LogController@updatePassword');
     // $router -> put('/{id}/position', 'LogController@updatePosition');
     // $router -> delete('/{id}', 'LogController@destroy');
+});
+
+$router -> group(['prefix' => 'categories'], function() use ($router) {
+    $router -> get('/', 'CategoryController@index');    
+    $router -> get('/{id}', 'CategoryController@show');
+    $router -> post('/', 'CategoryController@store');
+    $router -> put('/{id}', 'CategoryController@update');
+    $router -> delete('/{id}', 'CategoryController@destroy');
 });

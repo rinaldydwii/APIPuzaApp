@@ -53,6 +53,23 @@ class UserController extends Controller
             'data'      => User::find($id)
         ], 200);
     }
+
+    /**
+     * Display the self resource.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showSelf($id)
+    {
+        return response()->json([
+            'success'   => true,
+            'messages'  => 'Detail of User Self',
+            'data'      => Auth::user()
+        ], 200);
+    }
+
     /**
      * Update the specified resource in storage.
      *
