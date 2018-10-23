@@ -66,7 +66,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'Detail of User Self',
-            'data'      => Auth::user()
+            'data'      => User::find(Auth::user() -> id)->join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name')
         ], 200);
     }
 
