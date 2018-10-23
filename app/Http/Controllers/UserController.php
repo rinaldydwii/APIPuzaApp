@@ -61,7 +61,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showSelf($id)
+    public function showSelf()
     {
         return response()->json([
             'success'   => true,
