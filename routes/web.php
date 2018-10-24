@@ -28,11 +28,10 @@ $router -> group(['prefix' => 'positions'], function() use ($router) {
 $router -> group(['prefix' => 'users'], function() use ($router) {
     $router -> get('/', 'UserController@index');    
     $router -> get('/{id}', 'UserController@show');
-    
+    $router -> delete('/{id}', 'UserController@destroy');
     $router -> put('/profile', 'UserController@updateProfile');
     $router -> put('/password', 'UserController@updatePassword');
     $router -> put('/position/{id}', 'UserController@updatePosition');
-    $router -> delete('/{id}', 'UserController@destroy');
     $router -> get('/self', 'UserController@showSelf');
 });
 
