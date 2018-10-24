@@ -84,7 +84,7 @@ class UserController extends Controller
             'email'         => 'string|email|max:255|unique:users,email,'.Auth::user() -> id,
             'username'      => 'string|max:30|unique:users,username,'.Auth::user() -> id,
             'name'          => 'string|max:255',
-            'avatar'        => 'string|max:255',
+            'avatar'        => 'max:255',
             'phone_number'  => 'string|max:15',
         ]);
         
@@ -108,8 +108,7 @@ class UserController extends Controller
             $logInfo .= ' \n Phone: ' . $user -> phone_number . ' into ' . $request -> phone_number;
             $changed = true;
         }
-        // FIXME: INTEGRASI DENGAN FRONT END REACT NATIVE
-        if ($request -> avatar) {
+        if ($request -> avatar && $request -> avatar != $user -> avatar) {
             $logInfo .= ' \n Avatar: ' . $user -> avatar . ' into ' . $request -> avatar;
             $changed = true;
         }
