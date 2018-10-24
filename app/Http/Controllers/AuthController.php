@@ -59,7 +59,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => true,
                 'messages'  => 'Register Success!',
-                'data'      => $user,
+                'data'      => User::find($user -> id)->join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> first(),
             ], 201);
         } else {
             return response()->json([
