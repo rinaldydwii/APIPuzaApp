@@ -84,7 +84,7 @@ class UserController extends Controller
             'email'         => 'string|email|max:255|unique:users,email,'.Auth::user() -> id,
             'username'      => 'string|max:30|unique:users,username,'.Auth::user() -> id,
             'name'          => 'string|max:255',
-            'avatar'        => 'max:255',
+            'avatar'        => '',
             'phone_number'  => 'string|max:15',
         ]);
         
