@@ -130,7 +130,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'Change Profile Successfully!',
-            'data'      => $user -> join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name')
+            'data'      => User::find($user -> id) -> join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name')
         ], 200);
     }
     /**
