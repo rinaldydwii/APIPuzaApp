@@ -23,13 +23,16 @@ class LogController extends Controller
      */
     public function index()
     {
-        return response()->json(
-            Log::join('log_sub_types', 'logs.log_sub_type_id', '=', 'log_sub_types.id')
-                ->join('log_types', 'log_sub_types.log_type_id', '=', 'log_types.id')
-                ->join('users', 'logs.user_id', '=', 'users.id')
-                ->select('logs.id', 'log_sub_types.name as log_sub_type_name', 'log_types.name as log_type_name', 'logs.information',  'users.name as user_name', 'logs.created_at', 'logs.updated_at')
-                ->orderBy('created_at','desc')->get()
-            );
+        return response()->json([
+            'success'   => true,
+            'messages'  => 'List of All Logs!',
+            'data'      => Log::join('log_sub_types', 'logs.log_sub_type_id', '=', 'log_sub_types.id')
+                            ->join('log_types', 'log_sub_types.log_type_id', '=', 'log_types.id')
+                            ->join('users', 'logs.user_id', '=', 'users.id')
+                            ->select('logs.id', 'log_sub_types.name as log_sub_type_name', 'log_types.name as log_type_name', 'logs.information',  'users.name as user_name', 'logs.created_at', 'logs.updated_at')
+                            ->orderBy('created_at','desc')
+                            ->get()
+        ], 200);
     }
     /**
      * Store a newly created resource in storage.
