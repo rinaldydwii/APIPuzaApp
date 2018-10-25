@@ -34,7 +34,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Users',
-            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id')->select('users.*', 'positions.name as position_name')->get()
+            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id')->select('users.*', 'positions.name as position_name')->orderBy('created_at', 'desc')->get()
         ], 200);
     }
 
@@ -66,7 +66,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'Detail of User Self',
-            'data'      => User::find(Auth::user() -> id)->join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> first()
+            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find(Auth::user() -> id)
         ], 200);
     }
 
@@ -129,7 +129,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'Change Profile Successfully!',
-            'data'      => User::find($user -> id) -> join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> first()
+            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find($user -> id)
         ], 200);
     }
     /**

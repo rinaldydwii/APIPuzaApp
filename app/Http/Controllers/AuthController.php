@@ -49,7 +49,7 @@ class AuthController extends Controller
             'position_id'   => $request -> input('position_id'),
             'password'      => Hash::make($request -> input('password'))
         ]);
-        
+
         if ($user) {
             $log = Log::create([
                 'log_sub_type_id'   => env('LOG_USER_CREATE'),
@@ -59,7 +59,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => true,
                 'messages'  => 'Register Success!',
-                'data'      => User::find($user -> id)->join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> first(),
+                'data'      => User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find($user -> id),
             ], 201);
         } else {
             return response()->json([
