@@ -215,7 +215,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'Change Position Employee Successfully!',
-            'data'      => $user
+            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find($user -> id)
         ], 200);
     }
     /**
