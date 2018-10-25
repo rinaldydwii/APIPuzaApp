@@ -51,3 +51,19 @@ $router -> group(['prefix' => 'categories'], function() use ($router) {
     $router -> put('/{id}', 'CategoryController@update');
     $router -> delete('/{id}', 'CategoryController@destroy');
 });
+
+$router -> group(['prefix' => 'sub-categories'], function() use ($router) {
+    $router -> get('/', 'SubCategoryController@index');    
+    $router -> get('/{id}', 'SubCategoryController@show');
+    $router -> post('/', 'SubCategoryController@store');
+    $router -> put('/{id}', 'SubCategoryController@update');
+    $router -> delete('/{id}', 'SubCategoryController@destroy');
+});
+
+$router -> group(['prefix' => 'units'], function() use ($router) {
+    $router -> get('/', 'UnitController@index');    
+    $router -> get('/{id}', 'UnitController@show');
+    $router -> post('/', 'UnitController@store');
+    $router -> put('/{id}', 'UnitController@update');
+    $router -> delete('/{id}', 'UnitController@destroy');
+});
