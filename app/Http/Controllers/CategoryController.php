@@ -26,7 +26,7 @@ class CategoryController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Categories',
-            'data'      => Category::all()->orderBy('name', 'asc')
+            'data'      => Category::orderBy('name', 'asc')->get()
         ], 200);
     }
     /**
