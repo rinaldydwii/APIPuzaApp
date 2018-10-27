@@ -21,7 +21,7 @@ class LogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $logs = Log::join('log_sub_types', 'logs.log_sub_type_id', '=', 'log_sub_types.id')
                     ->join('log_types', 'log_sub_types.log_type_id', '=', 'log_types.id')
