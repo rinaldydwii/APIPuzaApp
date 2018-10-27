@@ -21,12 +21,25 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $category = Category::orderBy('name', 'asc');
+        if ($request -> input('offset')) {
+            if (!$request -> input('limit'))
+                return response()->json([
+                    'success'   => false,
+                    'messages'  => 'You must include limit parameter!',
+                ], 400);
+            $category = $category -> offset($request -> input('offset'));
+        }
+        if ($request -> input('limit'))
+            $category = $category -> limit($request -> input('limit'));
+        $category = $category -> get();
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Categories',
-            'data'      => Category::orderBy('name', 'asc')->get()
+            'data'      => $category,
+            'total'     => Category::count()
         ], 200);
     }
     /**

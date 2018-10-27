@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\SubCategory;
 use App\Log;
+use App\Http\Resources\SubCategory as SubCategoryResource;
 
 class SubCategoryController extends Controller
 {
@@ -24,10 +25,23 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
+        $category = Category::orderBy('name', 'asc');
+        if ($request -> input('offset')) {
+            if (!$request -> input('limit'))
+                return response()->json([
+                    'success'   => false,
+                    'messages'  => 'You must include limit parameter!',
+                ], 400);
+            $category = $category -> offset($request -> input('offset'));
+        }
+        if ($request -> input('limit'))
+            $category = $category -> limit($request -> input('limit'));
+        $category = $category -> get();
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Sub Categories',
-            'data'      => SubCategory::join('categories', 'sub_categories.category_id', '=', 'categories.id')->select('sub_categories.*', 'categories.name as categories_name')->get()
+            'data'      => SubCategoryResource::collection($category),
+            'total'     => Category::count()
         ], 200);
     }
     /**

@@ -28,11 +28,22 @@ class LogController extends Controller
                     ->join('users', 'logs.user_id', '=', 'users.id')
                     ->select('logs.id', 'log_sub_types.name as log_sub_type_name', 'log_types.name as log_type_name', 'logs.information',  'users.name as user_name', 'logs.created_at', 'logs.updated_at')
                     ->orderBy('created_at','desc');
+        if ($request -> input('offset')) {
+            if (!$request -> input('limit'))
+                return response()->json([
+                    'success'   => false,
+                    'messages'  => 'You must include limit parameter!',
+                ], 400);
+            $logs = $logs -> offset($request -> input('offset'));
+        }
+        if ($request -> input('limit'))
+            $logs = $logs -> limit($request -> input('limit'));
+        $logs = $logs -> get();
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Logs!',
-            'data'      => $request -> input('limit') ? $logs -> limit($request -> input('limit')) -> get() : $logs -> get()
-            // $log -> get()
+            'data'      => $logs,
+            'total'     => Log::count()
         ], 200);
     }
     /**

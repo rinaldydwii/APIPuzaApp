@@ -21,12 +21,25 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $unit = Unit::orderBy('value', 'asc');
+        if ($request -> input('offset')) {
+            if (!$request -> input('limit'))
+                return response()->json([
+                    'success'   => false,
+                    'messages'  => 'You must include limit parameter!',
+                ], 400);
+            $unit = $unit -> offset($request -> input('offset'));
+        }
+        if ($request -> input('limit'))
+            $unit = $unit -> limit($request -> input('limit'));
+        $unit = $unit -> get();
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Unit',
-            'data'      => Unit::orderBy('value', 'asc')->get()
+            'data'      => $unit,
+            'total'     => Unit::count()
         ], 200);
     }
     /**
