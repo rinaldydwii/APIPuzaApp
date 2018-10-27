@@ -31,7 +31,7 @@ class LogController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Logs!',
-            'data'      => $request -> input('limit')
+            'data'      => $logs -> get($request -> input('limit'))
             // $log -> get()
         ], 200);
     }
