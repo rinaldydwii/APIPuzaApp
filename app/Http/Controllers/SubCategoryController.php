@@ -23,7 +23,7 @@ class SubCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $category = Category::orderBy('name', 'asc');
         if ($request -> input('offset')) {
