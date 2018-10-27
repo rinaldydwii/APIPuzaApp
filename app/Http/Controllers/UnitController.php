@@ -21,12 +21,14 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $unit = Unit::orderBy('value', 'asc');
+        $unit = $request -> input('limit') ? $unit -> get($request -> input('limit')) : $unit -> get();
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Unit',
-            'data'      => Unit::orderBy('value', 'asc')->get()
+            'data'      => $unit
         ], 200);
     }
     /**
