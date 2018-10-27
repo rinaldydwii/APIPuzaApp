@@ -26,7 +26,7 @@ class UnitController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Unit',
-            'data'      => Unit::all()
+            'data'      => Unit::orderBy('value', 'asc')->get()
         ], 200);
     }
     /**
