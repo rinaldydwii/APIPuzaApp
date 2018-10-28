@@ -67,3 +67,11 @@ $router -> group(['prefix' => 'units'], function() use ($router) {
     $router -> put('/{id}', 'UnitController@update');
     $router -> delete('/{id}', 'UnitController@destroy');
 });
+
+$router -> group(['prefix' => 'brands'], function() use ($router) {
+    $router -> get('/', 'BrandController@index');    
+    $router -> get('/{id}', 'BrandController@show');
+    $router -> post('/', 'BrandController@store');
+    $router -> put('/{id}', 'BrandController@update');
+    $router -> delete('/{id}', 'BrandController@destroy');
+});
