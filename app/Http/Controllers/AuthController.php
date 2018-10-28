@@ -119,4 +119,17 @@ class AuthController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Index login controller
+     *
+     * When user success login will retrive callback as api_token
+     */
+    public function check()
+    {
+        return response()->json([
+            'success'   => true,
+            'messages'  => 'User valid!',
+        ], 200);
+    }
 }
