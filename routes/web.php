@@ -19,6 +19,7 @@ $router->get('/', function () {
 
 $router -> post('/login', 'AuthController@login');
 $router -> post('/register', 'AuthController@register');
+$router -> get('/check', 'AuthController@check');
 // $router -> get('/user/{id}', ['middleware' => 'auth', 'uses' => 'UserController@get_user']); 
 
 $router -> group(['prefix' => 'positions'], function() use ($router) {
