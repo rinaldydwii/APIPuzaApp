@@ -4,14 +4,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Position;
 use App\Log;
-
-/**
- * TODO:
- * - CODE FOR CHANGE AVATAR ON CHANGE PROFILE
- */
 
 class UserController extends Controller
 {
@@ -50,7 +46,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'Detail of User',
-            'data'      => User::find($id)
+            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find($id)
         ], 200);
     }
 
@@ -87,30 +83,38 @@ class UserController extends Controller
             'avatar'        => '',
             'phone_number'  => 'string|max:15',
         ]);
-        
+
         $user = Auth::user();
+
         $logInfo = 'Change Profile';
         $changed = false;
+        $update = [];
 
         if ($request -> email && $request -> email != $user -> email) {
             $logInfo .= ' \n Email: ' . $user -> email . ' into ' . $request -> email;
             $changed = true;
+            $update['email'] = $request -> input('email');
         }
         if ($request -> username && $request -> username != $user -> username) {
             $logInfo .= ' \n Username: ' . $user -> username . ' into ' . $request -> username;
             $changed = true;
+            $update['username'] = $request -> input('username');
         }
         if ($request -> name && $request -> name != $user -> name) {
             $logInfo .= ' \n Name: ' . $user -> name . ' into ' . $request -> name;
             $changed = true;
+            $update['name'] = $request -> input('name');
         }
         if ($request -> phone_number && $request -> phone_number != $user -> phone_number) {
             $logInfo .= ' \n Phone: ' . $user -> phone_number . ' into ' . $request -> phone_number;
             $changed = true;
+            $update['phone_number'] = $request -> input('phone_number');
         }
         if ($request -> avatar && $request -> avatar != $user -> avatar) {
             $logInfo .= ' \n Avatar: ' . $user -> avatar . ' into ' . $request -> avatar;
             $changed = true;
+            $update['avatar'] = $user -> id.".jpg";
+            Storage::disk('ftp')->put('users/avatars/'.$user -> id.'.jpg', base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->input('avatar'))));
         }
 
         if (!$changed) {
@@ -120,7 +124,7 @@ class UserController extends Controller
             ], 400);
         }
         
-        $user -> update($request->all());
+        $user -> update($update);
         $log = Log::create([
             'log_sub_type_id'   => env('LOG_USER_CHANGE_PROFILE'),
             'user_id'           => Auth::user() -> id,
