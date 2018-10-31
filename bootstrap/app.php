@@ -48,6 +48,14 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton('filesystem', function ($app) {
+    return $app->loadComponent(
+        'filesystems',
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        'filesystem'
+    );
+});
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -81,6 +89,8 @@ $app->routeMiddleware([
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -98,5 +108,7 @@ $app->router->group([
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
+
+$app->configure('filesystems');
 
 return $app;
