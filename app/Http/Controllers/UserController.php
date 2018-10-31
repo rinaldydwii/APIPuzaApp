@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\User as UserResource;
 use App\User;
 use App\Position;
 use App\Log;
@@ -30,7 +31,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Users',
-            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id')->select('users.*', 'positions.name as position_name')->orderBy('created_at', 'desc')->get()
+            'data'      => new UserResource(User::join('positions', 'users.position_id', '=', 'positions.id')->select('users.*', 'positions.name as position_name')->orderBy('created_at', 'desc')->get())
         ], 200);
     }
 
@@ -46,7 +47,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'Detail of User',
-            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find($id)
+            'data'      => new UserResource(User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find($id))
         ], 200);
     }
 
@@ -62,7 +63,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'Detail of User Self',
-            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find(Auth::user() -> id)
+            'data'      => new UserResource(User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find(Auth::user() -> id))
         ], 200);
     }
 
@@ -111,7 +112,7 @@ class UserController extends Controller
             $update['phone_number'] = $request -> input('phone_number');
         }
         if ($request -> avatar && $request -> avatar != $user -> avatar) {
-            $logInfo .= ' \n Avatar: ' . $user -> avatar . ' into ' . $request -> avatar;
+            $logInfo .= ' \n Avatar' ;
             $changed = true;
             $update['avatar'] = $user -> id.".jpg";
             Storage::disk('ftp')->put('users/avatars/'.$user -> id.'.'.explode('/', explode(';', $request->input('avatar'))[0])[1], base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->input('avatar'))));
@@ -133,7 +134,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'Change Profile Successfully!',
-            'data'      => User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find($user -> id)
+            'data'      => new UserResource(User::join('positions', 'users.position_id', '=', 'positions.id') -> select('users.*', 'positions.name as position_name') -> find($user -> id))
         ], 200);
     }
     /**
