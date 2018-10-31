@@ -114,7 +114,7 @@ class UserController extends Controller
             $logInfo .= ' \n Avatar: ' . $user -> avatar . ' into ' . $request -> avatar;
             $changed = true;
             $update['avatar'] = $user -> id.".jpg";
-            Storage::disk('ftp')->put('users/avatars/'.$user -> id. explode('/', explode(';', $request->input('avatar'))[0])[1], base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->input('avatar'))));
+            Storage::disk('ftp')->put('users/avatars/'.$user -> id.'.'.explode('/', explode(';', $request->input('avatar'))[0])[1], base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->input('avatar'))));
         }
 
         if (!$changed) {
