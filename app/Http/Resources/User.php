@@ -20,7 +20,7 @@ class User extends JsonResource
             'username'      => $this->username,
             'email'         => $this->email,
             'phone_number'  => $this->phone_number,
-            'avatar'        => env('ASSETS_DOMAIN').env('ASSETS_IMAGE_FOLDER').$this->avatar,
+            'avatar'        => $this->avatar ? env('ASSETS_DOMAIN').env('ASSETS_IMAGE_FOLDER').$this->avatar : $this->avatar, 
             'position_id'   => $this->position_id,
             'position_name' => $this->position_name,
         ];
