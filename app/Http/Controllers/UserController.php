@@ -80,7 +80,7 @@ class UserController extends Controller
             'email'         => 'string|email|max:255|unique:users,email,'.Auth::user() -> id,
             'username'      => 'string|max:30|unique:users,username,'.Auth::user() -> id,
             'name'          => 'string|max:255',
-            'avatar'        => '',
+            'avatar'        => 'string',
             'phone_number'  => 'string|max:15',
         ]);
 
@@ -114,7 +114,7 @@ class UserController extends Controller
             $logInfo .= ' \n Avatar: ' . $user -> avatar . ' into ' . $request -> avatar;
             $changed = true;
             $update['avatar'] = $user -> id.".jpg";
-            Storage::disk('ftp')->put('users/avatars/'.$user -> id.'.jpg', base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->input('avatar'))));
+            Storage::disk('ftp')->put('users/avatars/'.$user -> id. explode('/', explode(';', $request->input('avatar'))[0])[1], base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->input('avatar'))));
         }
 
         if (!$changed) {
