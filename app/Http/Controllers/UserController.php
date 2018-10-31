@@ -31,7 +31,7 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'messages'  => 'List of All Users',
-            'data'      => new UserResource(User::join('positions', 'users.position_id', '=', 'positions.id')->select('users.*', 'positions.name as position_name')->orderBy('created_at', 'desc')->get())
+            'data'      => UserResource::collection(User::join('positions', 'users.position_id', '=', 'positions.id')->select('users.*', 'positions.name as position_name')->orderBy('created_at', 'desc')->get())
         ], 200);
     }
 
