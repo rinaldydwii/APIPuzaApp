@@ -111,7 +111,7 @@ class UserController extends Controller
             $changed = true;
             $update['phone_number'] = $request -> input('phone_number');
         }
-        if ($request -> avatar && $request -> avatar != $user -> avatar) {
+        if ($request -> avatar) {
             $logInfo .= ' \n Avatar' ;
             $changed = true;
             $update['avatar'] = $user -> id.".jpg";
