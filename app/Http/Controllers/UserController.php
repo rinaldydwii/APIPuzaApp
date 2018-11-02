@@ -114,8 +114,9 @@ class UserController extends Controller
         if ($request -> avatar) {
             $logInfo .= ' \n Avatar' ;
             $changed = true;
-            $update['avatar'] = $user -> id.".jpg";
-            Storage::disk('ftp')->put('users/avatars/'.$user -> id.'.'.explode('/', explode(';', $request->input('avatar'))[0])[1], base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->input('avatar'))));
+            $imageExt = explode('/', explode(';', $request->input('avatar'))[0])[1];
+            $update['avatar'] = $user -> id.".".$imageExt;
+            Storage::disk('ftp')->put('users/avatars/'.$user -> id.'.'.$imageExt, base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->input('avatar'))));
         }
 
         if (!$changed) {
