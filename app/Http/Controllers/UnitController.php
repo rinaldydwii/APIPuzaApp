@@ -103,8 +103,8 @@ class UnitController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name'  => 'required|max:50|unique:units,name,'.$id,
-            'value' => 'required|integer|min:0'
+            'name'  => 'max:50|unique:units,name,'.$id,
+            'value' => 'integer|min:0'
         ]);
 
         $unit = Unit::findOrFail($id);
