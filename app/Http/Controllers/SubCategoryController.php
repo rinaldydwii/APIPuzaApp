@@ -105,8 +105,8 @@ class SubCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'category_id'   => 'required|exists:categories,id',
-            'name'          => 'required|max:50|unique:sub_categories,name,'.$id,
+            'category_id'   => 'exists:categories,id',
+            'name'          => 'max:50|unique:sub_categories,name,'.$id,
         ]);
 
         $subCategory = SubCategory::findOrFail($id);
